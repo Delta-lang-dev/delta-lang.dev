@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>intent — Delta (Δ) Docs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+  <div class="nav-links">
+    <a href="/docs" style="color:var(--accent2)">Docs</a>
+    <a href="/playground">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+  </div>
+</div></nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link">Installation</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch"   class="sidebar-link ">patch</a>
+      <a href="/docs/fix"     class="sidebar-link ">fix</a>
+      <a href="/docs/intent"  class="sidebar-link active">intent</a>
+      <a href="/docs/migrate" class="sidebar-link ">migrate</a>
+      <a href="/docs/guard"   class="sidebar-link ">guard</a>
+      <a href="/docs/trace"   class="sidebar-link ">trace</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <div class="construct-kw" style="margin-bottom:16px">intent</div>
+    <h1>intent</h1>
+    <p class="docs-lead">Inject code at every function entry or exit point across matching files.</p>
+    <p>intent lets you add logging, tracing, metrics, guards, or any other cross-cutting concern to every function in scope — without manually editing each file. Delta finds every function declaration and injects your code at the specified hook point.</p>
+    <h2>Syntax</h2>
+    <pre><code>intent "description" {
+  scope:    "glob/**"
+  language: Language
+  inject:   { codeToInject }
+  where:    function_entry | function_exit
+  preserve: "comment to keep"  // optional
+  guard:    guardName          // optional
+}</code></pre>
+    <h2>Example</h2>
+    <pre><code>intent "add request tracing" {
+  scope:    "src/api/**"
+  language: TypeScript
+  inject:   { tracer.startSpan(arguments.callee.name); }
+  where:    function_entry
+}
+
+intent "log all exits" {
+  scope:    "src/api/**"
+  language: TypeScript
+  inject:   { logger.debug("exit"); }
+  where:    function_exit
+}</code></pre>
+    <h2>Fields</h2>
+    <table class="docs-table">
+      <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>label</code></td><td>✓</td><td>Description of the intent</td></tr><tr><td><code>scope</code></td><td>✓</td><td>Glob: which files to modify</td></tr><tr><td><code>language</code></td><td>✓</td><td>Target language for the injected code</td></tr><tr><td><code>inject</code></td><td>✓</td><td>Code block to inject</td></tr><tr><td><code>where</code></td><td>✓</td><td>function_entry or function_exit — where to inject</td></tr><tr><td><code>preserve</code></td><td>✓</td><td>Comment pattern to preserve existing injections</td></tr><tr><td><code>guard</code></td><td>✓</td><td>Guard name — intent is only applied if guard passes</td></tr></tbody>
+    </table>
+    <h2>Tips</h2>
+    <ul><li>intent is the fastest way to add observability to an entire service</li><li>Combine with guard to only inject when certain conditions hold</li><li>Use function_exit to add cleanup, flush, or finalisation code</li><li>intent + trace is a powerful combination for security auditing</li></ul>
+  </main>
+</div>
+</body></html>
