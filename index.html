@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delta (Δ) — Universal Code Transformation Language</title>
+  <meta name="description" content="Delta is a language-agnostic code transformation language. Patch, fix, migrate, and guard your codebase with readable, composable transforms." />
+  <meta property="og:title" content="Delta — Universal Code Transformation Language" />
+  <meta property="og:description" content="Patch, fix, migrate, and guard your codebase with readable, composable transforms." />
+  <meta property="og:url" content="https://delta-lang.dev" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+    <div class="nav-links">
+      <a href="/docs">Docs</a>
+      <a href="/playground">Playground</a>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library">Fix Library</a>
+      <a href="https://github.com/Delta-Lang-Dev/Delta" class="nav-cta">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Open Source · Language Agnostic · TypeScript</div>
+    <h1 class="hero-title">Transform code.<br />Any language.</h1>
+    <p class="hero-subtitle">
+      Delta is a universal code transformation language. Write readable, composable transforms
+      that work across TypeScript, Python, Go, Rust, Java, and more — powered by real AST parsers.
+    </p>
+    <div class="hero-actions">
+      <a href="/docs/getting-started" class="btn btn-primary">Get Started →</a>
+      <a href="/playground" class="btn btn-secondary">Try in Playground</a>
+    </div>
+    <div class="hero-install">
+      <code>npm install -g @delta-lang/cli</code>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install -g @delta-lang/cli')">Copy</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── Live Example ────────────────────────────────────────────────────── -->
+<section class="example">
+  <div class="container">
+    <div class="example-header">
+      <h2>See it in action</h2>
+      <p>A single <code>.delta</code> file modernises your entire codebase.</p>
+    </div>
+    <div class="example-grid">
+      <div class="code-panel">
+        <div class="code-panel-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="code-panel-title">transform.delta</span>
+        </div>
+        <pre class="code"><code><span class="kw">guard</span> <span class="str">"no raw SQL"</span> {
+  scope:   <span class="str">"src/**"</span>
+  <span class="kw">assert</span>:  <span class="kw">no</span> raw f-string SQL queries exist
+  on_fail: block_apply, show_diff
+}
+
+<span class="kw">fix</span> strictNull {
+  pattern: { == null }
+  replace: { === null }
+  scope:   <span class="str">"**/*.ts"</span>
+  severity: bug
+}
+
+<span class="kw">migrate</span> <span class="str">"lodash → native"</span> <span class="kw">in</span> TypeScript {
+  <span class="kw">rename</span>: _.map    -> Array.prototype.map
+  <span class="kw">rename</span>: _.filter -> Array.prototype.filter
+  scope:  <span class="str">"src/**/*.ts"</span>
+}
+
+<span class="kw">apply</span> fix strictNull <span class="kw">to</span> project preview</code></pre>
+      </div>
+      <div class="example-output">
+        <div class="output-step">
+          <div class="step-icon">✓</div>
+          <div>
+            <strong>Guard passes</strong>
+            <p>No raw SQL found in 47 files</p>
+          </div>
+        </div>
+        <div class="output-step">
+          <div class="step-icon">⚡</div>
+          <div>
+            <strong>Fix applied</strong>
+            <p>23 files · 61 occurrences updated</p>
+          </div>
+        </div>
+        <div class="output-step">
+          <div class="step-icon">→</div>
+          <div>
+            <strong>Migration previewed</strong>
+            <p>12 lodash calls ready to replace</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Six Constructs ──────────────────────────────────────────────────── -->
+<section class="constructs">
+  <div class="container">
+    <h2>Six constructs. Infinite transforms.</h2>
+    <p class="section-subtitle">Every transformation maps to one of six composable keywords.</p>
+    <div class="constructs-grid">
+      <div class="construct-card">
+        <div class="construct-kw">patch</div>
+        <h3>Patch</h3>
+        <p>Surgically replace a specific function or block in a specific file. Uses the TypeScript Compiler API or tree-sitter for AST-accurate targeting.</p>
+      </div>
+      <div class="construct-card">
+        <div class="construct-kw">fix</div>
+        <h3>Fix</h3>
+        <p>Define a reusable pattern → replacement rule and apply it across your entire codebase with glob scoping and $VAR capture groups.</p>
+      </div>
+      <div class="construct-card">
+        <div class="construct-kw">intent</div>
+        <h3>Intent</h3>
+        <p>Inject code at every function entry or exit point without manually touching each file. Add logging, tracing, or guards everywhere at once.</p>
+      </div>
+      <div class="construct-card">
+        <div class="construct-kw">migrate</div>
+        <h3>Migrate</h3>
+        <p>Upgrade from one API to another. Rename symbols, move files, replace patterns — all in one declarative migration block.</p>
+      </div>
+      <div class="construct-card">
+        <div class="construct-kw">guard</div>
+        <h3>Guard</h3>
+        <p>Assert invariants before applying any transform. Block apply if a function is missing, a forbidden import exists, or raw SQL is detected.</p>
+      </div>
+      <div class="construct-card">
+        <div class="construct-kw">trace</div>
+        <h3>Trace</h3>
+        <p>Follow data through your codebase. Track where <code>req.body.password</code> flows, flag paths that reach <code>console.log</code> or unparameterised queries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Language Support ────────────────────────────────────────────────── -->
+<section class="languages">
+  <div class="container">
+    <h2>Works across every major language</h2>
+    <div class="lang-grid">
+      <div class="lang-chip lang-stable">TypeScript <span>stable</span></div>
+      <div class="lang-chip lang-stable">JavaScript <span>stable</span></div>
+      <div class="lang-chip lang-stable">Python <span>stable</span></div>
+      <div class="lang-chip lang-stable">Go <span>stable</span></div>
+      <div class="lang-chip lang-stable">Rust <span>stable</span></div>
+      <div class="lang-chip lang-beta">Java <span>beta</span></div>
+      <div class="lang-chip lang-beta">Kotlin <span>beta</span></div>
+      <div class="lang-chip lang-beta">Swift <span>beta</span></div>
+      <div class="lang-chip lang-beta">Ruby <span>beta</span></div>
+      <div class="lang-chip lang-beta">C++ <span>beta</span></div>
+      <div class="lang-chip lang-beta">C# <span>beta</span></div>
+      <div class="lang-chip lang-beta">PHP <span>beta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────── -->
+<section class="cta">
+  <div class="container">
+    <h2>Start transforming today</h2>
+    <p>One command. Your entire codebase, modernised.</p>
+    <div class="cta-actions">
+      <a href="/docs/getting-started" class="btn btn-primary btn-lg">Read the docs</a>
+      <a href="https://github.com/Delta-Lang-Dev/Delta" class="btn btn-outline btn-lg">Star on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span>Δ Delta — MIT License</span>
+      <div class="footer-links">
+        <a href="/docs">Docs</a>
+        <a href="https://github.com/Delta-Lang-Dev">GitHub</a>
+        <a href="https://github.com/Delta-Lang-Dev/fix-library">Fix Library</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
