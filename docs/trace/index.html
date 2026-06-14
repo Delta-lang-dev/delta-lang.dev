@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>trace — Delta (Δ) Docs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+  <div class="nav-links">
+    <a href="/docs" style="color:var(--accent2)">Docs</a>
+    <a href="/playground">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+  </div>
+</div></nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link">Installation</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch"   class="sidebar-link ">patch</a>
+      <a href="/docs/fix"     class="sidebar-link ">fix</a>
+      <a href="/docs/intent"  class="sidebar-link ">intent</a>
+      <a href="/docs/migrate" class="sidebar-link ">migrate</a>
+      <a href="/docs/guard"   class="sidebar-link ">guard</a>
+      <a href="/docs/trace"   class="sidebar-link active">trace</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <div class="construct-kw" style="margin-bottom:16px">trace</div>
+    <h1>trace</h1>
+    <p class="docs-lead">Follow data through your codebase and flag dangerous paths.</p>
+    <p>trace performs data-flow analysis. Give it a variable or expression as origin and it follows every path that value can take — through assignments, function calls, and returns — reporting any path that matches your flag conditions.</p>
+    <h2>Syntax</h2>
+    <pre><code>trace variableName in "directory/" {
+  language: Language
+  origin:   source.expression
+  follow:   assignments, function_calls, returns
+  report:   full_chain | summary
+  flag:     "condition to flag"
+}</code></pre>
+    <h2>Example</h2>
+    <pre><code>trace userInput in "src/" {
+  language: TypeScript
+  origin:   req.body.email
+  follow:   assignments, function_calls, returns
+  report:   full_chain
+  flag:     "any path that reaches db.query without sanitize"
+  flag:     "any path that reaches console.log"
+  flag:     "any path that reaches res.send without encode"
+}</code></pre>
+    <h2>Fields</h2>
+    <table class="docs-table">
+      <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>ident</code></td><td>✓</td><td>Name for this trace (used in report output)</td></tr><tr><td><code>in directory</code></td><td>✓</td><td>Directory to analyse</td></tr><tr><td><code>language</code></td><td>✓</td><td>Language to use for AST parsing</td></tr><tr><td><code>origin</code></td><td>✓</td><td>Starting expression (e.g. req.body.field)</td></tr><tr><td><code>follow</code></td><td>✓</td><td>What to follow: assignments, function_calls, returns</td></tr><tr><td><code>report</code></td><td>✓</td><td>full_chain (every step) or summary (flagged paths only)</td></tr><tr><td><code>flag</code></td><td>✓</td><td>Natural-language condition — flagged in output if matched</td></tr></tbody>
+    </table>
+    <h2>Tips</h2>
+    <ul><li>trace is Delta's security construct — use it to audit user input handling</li><li>Combine with guard and intent for a full security hardening workflow</li><li>Multiple flag conditions can be specified in one trace block</li><li>report: summary is faster for large codebases — only shows flagged paths</li></ul>
+  </main>
+</div>
+</body></html>
