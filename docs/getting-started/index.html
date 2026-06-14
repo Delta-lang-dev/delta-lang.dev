@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started — Delta (Δ)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+    <div class="nav-links">
+      <a href="/docs" style="color:var(--accent2)">Docs</a>
+      <a href="/playground">Playground</a>
+      <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+    </div>
+  </div>
+</nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link active">Installation</a>
+      <a href="/docs/first-transform" class="sidebar-link">Your first transform</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch" class="sidebar-link">patch</a>
+      <a href="/docs/fix" class="sidebar-link">fix</a>
+      <a href="/docs/intent" class="sidebar-link">intent</a>
+      <a href="/docs/migrate" class="sidebar-link">migrate</a>
+      <a href="/docs/guard" class="sidebar-link">guard</a>
+      <a href="/docs/trace" class="sidebar-link">trace</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <h1>Getting Started</h1>
+    <p class="docs-lead">Install Delta and run your first code transformation in under 5 minutes.</p>
+
+    <h2>Installation</h2>
+    <p>Delta requires Node.js 18 or higher.</p>
+    <pre><code>npm install -g @delta-lang/cli</code></pre>
+    <p>Verify the installation:</p>
+    <pre><code>delta --version</code></pre>
+
+    <h2>Your first transform</h2>
+    <p>Create a file called <code>transform.delta</code>:</p>
+    <pre><code><span class="kw">fix</span> strictNull {
+  pattern: { == null }
+  replace: { === null }
+  scope:   <span class="str">"**/*.ts"</span>
+  severity: bug
+  note:    <span class="str">"use strict equality"</span>
+}
+
+<span class="kw">apply</span> fix strictNull <span class="kw">to</span> project preview</code></pre>
+
+    <p>Preview what will change:</p>
+    <pre><code>delta run transform.delta --preview</code></pre>
+
+    <p>Apply the changes:</p>
+    <pre><code>delta run transform.delta</code></pre>
+
+    <h2>CLI Commands</h2>
+    <table class="docs-table">
+      <thead><tr><th>Command</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>delta run &lt;file&gt;</code></td><td>Run a .delta file</td></tr>
+        <tr><td><code>delta run &lt;file&gt; --preview</code></td><td>Preview changes without writing</td></tr>
+        <tr><td><code>delta check &lt;file&gt;</code></td><td>Parse and validate without running</td></tr>
+        <tr><td><code>delta init</code></td><td>Scaffold a starter transform.delta</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Next steps</h2>
+    <ul>
+      <li><a href="/docs/fix">Learn the fix construct</a></li>
+      <li><a href="/docs/guard">Add guards to your transforms</a></li>
+      <li><a href="https://github.com/Delta-Lang-Dev/fix-library">Browse the Fix Library</a></li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>
