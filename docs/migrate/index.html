@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>migrate — Delta (Δ) Docs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+  <div class="nav-links">
+    <a href="/docs" style="color:var(--accent2)">Docs</a>
+    <a href="/playground">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+  </div>
+</div></nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link">Installation</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch"   class="sidebar-link ">patch</a>
+      <a href="/docs/fix"     class="sidebar-link ">fix</a>
+      <a href="/docs/intent"  class="sidebar-link ">intent</a>
+      <a href="/docs/migrate" class="sidebar-link active">migrate</a>
+      <a href="/docs/guard"   class="sidebar-link ">guard</a>
+      <a href="/docs/trace"   class="sidebar-link ">trace</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <div class="construct-kw" style="margin-bottom:16px">migrate</div>
+    <h1>migrate</h1>
+    <p class="docs-lead">Upgrade from one API version to another across your codebase.</p>
+    <p>migrate handles the mechanical part of API migrations: renaming symbols, moving files, removing deprecated functions. Write the migration rules once and apply them project-wide.</p>
+    <h2>Syntax</h2>
+    <pre><code>migrate "label" in Language {
+  rename: oldName -> newName
+  move:   "old/path.ts" -> "new/path.ts"
+  remove: deprecated symbolName
+  scope:  "glob/**"  // optional
+}</code></pre>
+    <h2>Example</h2>
+    <pre><code>migrate "lodash 4 to native" in TypeScript {
+  rename: _.map    -> [].map
+  rename: _.filter -> [].filter
+  rename: _.reduce -> [].reduce
+  rename: _.find   -> [].find
+  remove: deprecated _.each
+  scope:  "src/**/*.ts"
+}
+
+apply migrate "lodash 4 to native" to project preview</code></pre>
+    <h2>Fields</h2>
+    <table class="docs-table">
+      <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>label</code></td><td>✓</td><td>Unique label — referenced by apply</td></tr><tr><td><code>in Language</code></td><td>✓</td><td>Target language</td></tr><tr><td><code>rename: A -> B</code></td><td>✓</td><td>Rename a symbol everywhere it appears</td></tr><tr><td><code>move: A -> B</code></td><td>✓</td><td>Move a file and update all import paths</td></tr><tr><td><code>remove: deprecated X</code></td><td>✓</td><td>Remove calls to a deprecated symbol</td></tr><tr><td><code>scope</code></td><td>✓</td><td>Glob to limit which files are affected</td></tr></tbody>
+    </table>
+    <h2>Tips</h2>
+    <ul><li>Chain multiple rename rules in one migrate block</li><li>move: updates import paths in all other files automatically</li><li>Always preview a migration first — it affects many files</li><li>Pair with guard to assert the new API exists before migrating to it</li></ul>
+  </main>
+</div>
+</body></html>

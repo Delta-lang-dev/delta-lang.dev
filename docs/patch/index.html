@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>patch — Delta (Δ) Docs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+  <div class="nav-links">
+    <a href="/docs" style="color:var(--accent2)">Docs</a>
+    <a href="/playground">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+  </div>
+</div></nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link">Installation</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch"   class="sidebar-link active">patch</a>
+      <a href="/docs/fix"     class="sidebar-link ">fix</a>
+      <a href="/docs/intent"  class="sidebar-link ">intent</a>
+      <a href="/docs/migrate" class="sidebar-link ">migrate</a>
+      <a href="/docs/guard"   class="sidebar-link ">guard</a>
+      <a href="/docs/trace"   class="sidebar-link ">trace</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <div class="construct-kw" style="margin-bottom:16px">patch</div>
+    <h1>patch</h1>
+    <p class="docs-lead">Surgically replace a function or block in a specific file.</p>
+    <p>Use patch when you know exactly which function or code block needs to change in a specific file. Delta uses the TypeScript Compiler API or tree-sitter to locate the target by AST — not text search.</p>
+    <h2>Syntax</h2>
+    <pre><code>patch "path/to/file" in Language {
+  find fn functionName() {}
+  replace with { newBody }
+  why: "reason"  // optional
+}</code></pre>
+    <h2>Example</h2>
+    <pre><code>patch "src/auth/login.ts" in TypeScript {
+  find fn hashPassword(password: string) {}
+  replace with {
+    return await bcrypt.hash(password, 12);
+  }
+  why: "upgrade to async bcrypt"
+}</code></pre>
+    <h2>Fields</h2>
+    <table class="docs-table">
+      <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>file</code></td><td>✓</td><td>Relative path to the file to patch</td></tr><tr><td><code>in Language</code></td><td>✓</td><td>Target language: TypeScript, JavaScript, Python, Go, Rust, Java</td></tr><tr><td><code>find fn name()</code></td><td>✓</td><td>Locate a function by name</td></tr><tr><td><code>find block label</code></td><td>✓</td><td>Locate a labeled code block</td></tr><tr><td><code>replace with { }</code></td><td>✓</td><td>New implementation — replaces the entire function body</td></tr><tr><td><code>why</code></td><td>✓</td><td>Human-readable reason, stored in commit message and diff output</td></tr></tbody>
+    </table>
+    <h2>Tips</h2>
+    <ul><li>patch only touches one function in one file — use fix for multi-file patterns</li><li>The file path is relative to where you run delta from</li><li>Use preview to see the diff before applying: delta run file.delta --preview</li><li>The replace body replaces the function body, not the signature</li></ul>
+  </main>
+</div>
+</body></html>

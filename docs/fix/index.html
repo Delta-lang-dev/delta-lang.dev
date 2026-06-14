@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fix — Delta (Δ) Docs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+  <div class="nav-links">
+    <a href="/docs" style="color:var(--accent2)">Docs</a>
+    <a href="/playground">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+  </div>
+</div></nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link">Installation</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch"   class="sidebar-link ">patch</a>
+      <a href="/docs/fix"     class="sidebar-link active">fix</a>
+      <a href="/docs/intent"  class="sidebar-link ">intent</a>
+      <a href="/docs/migrate" class="sidebar-link ">migrate</a>
+      <a href="/docs/guard"   class="sidebar-link ">guard</a>
+      <a href="/docs/trace"   class="sidebar-link ">trace</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <div class="construct-kw" style="margin-bottom:16px">fix</div>
+    <h1>fix</h1>
+    <p class="docs-lead">Define a reusable pattern → replacement rule across your entire codebase.</p>
+    <p>fix is Delta's most versatile construct. Write a pattern with $VAR capture groups and a replacement — Delta applies it across every file matching the scope glob. Chain multiple fixes in one file and apply them all at once.</p>
+    <h2>Syntax</h2>
+    <pre><code>fix fixName {
+  pattern:  { old pattern with $VAR }
+  replace:  { new pattern with $VAR }
+  scope:    "glob/**/*.ts"
+  severity: bug | perf | style | security
+  note:     "explanation"  // optional
+}</code></pre>
+    <h2>Example</h2>
+    <pre><code>fix strictNull {
+  pattern:  { $X == null }
+  replace:  { $X === null }
+  scope:    "**/*.ts"
+  severity: bug
+  note:     "Loose equality matches both null and undefined"
+}
+
+apply fix strictNull to project preview</code></pre>
+    <h2>Fields</h2>
+    <table class="docs-table">
+      <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>name</code></td><td>✓</td><td>Unique identifier — referenced by apply</td></tr><tr><td><code>pattern</code></td><td>✓</td><td>Code pattern to match, with optional $VAR capture groups</td></tr><tr><td><code>replace</code></td><td>✓</td><td>Replacement code — $VAR references are substituted</td></tr><tr><td><code>scope</code></td><td>✓</td><td>Glob pattern: files to scan (e.g. src/**/*.ts)</td></tr><tr><td><code>severity</code></td><td>✓</td><td>bug | perf | style | security — shown in output</td></tr><tr><td><code>note</code></td><td>✓</td><td>Explanation shown in diff output</td></tr></tbody>
+    </table>
+    <h2>Tips</h2>
+    <ul><li>Always test with preview first: apply fix myFix to project preview</li><li>$VAR captures any expression in that position</li><li>Multiple fixes can be defined and applied in the same file</li><li>Scope globs follow fast-glob syntax — ** crosses directory boundaries</li></ul>
+  </main>
+</div>
+</body></html>
