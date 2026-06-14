@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>guard — Delta (Δ) Docs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="/css/docs.css" />
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+  <div class="nav-links">
+    <a href="/docs" style="color:var(--accent2)">Docs</a>
+    <a href="/playground">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta">GitHub</a>
+  </div>
+</div></nav>
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="sidebar-section"><div class="sidebar-label">Getting Started</div>
+      <a href="/docs/getting-started" class="sidebar-link">Installation</a>
+      <a href="/docs/cli" class="sidebar-link">CLI reference</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Constructs</div>
+      <a href="/docs/patch"   class="sidebar-link ">patch</a>
+      <a href="/docs/fix"     class="sidebar-link ">fix</a>
+      <a href="/docs/intent"  class="sidebar-link ">intent</a>
+      <a href="/docs/migrate" class="sidebar-link ">migrate</a>
+      <a href="/docs/guard"   class="sidebar-link active">guard</a>
+      <a href="/docs/trace"   class="sidebar-link ">trace</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-label">Resources</div>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" class="sidebar-link">Fix Library</a>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <div class="construct-kw" style="margin-bottom:16px">guard</div>
+    <h1>guard</h1>
+    <p class="docs-lead">Assert invariants before any transform runs.</p>
+    <p>guard checks conditions in your codebase before allowing transforms to proceed. If a guard fails, the apply is blocked and a diff is shown. Use guards to prevent transforms from running in an inconsistent state.</p>
+    <h2>Syntax</h2>
+    <pre><code>guard "label" {
+  scope:   "glob/**"
+  assert:  fn name() exists
+  assert:  no file imports from "path"
+  assert:  all files contain pattern
+  on_fail: block_apply | warn | show_diff
+}</code></pre>
+    <h2>Example</h2>
+    <pre><code>guard "auth-api-contract" {
+  scope:   "src/**"
+  assert:  fn verifyToken() exists
+  assert:  fn hashPassword() exists
+  assert:  no file imports from "../admin"
+  on_fail: block_apply, show_diff
+}
+
+guard "no-raw-sql" {
+  scope:   "src/**/*.ts"
+  assert:  no raw f-string SQL queries exist
+  on_fail: block_apply, warn
+}</code></pre>
+    <h2>Fields</h2>
+    <table class="docs-table">
+      <thead><tr><th>Field</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>label</code></td><td>✓</td><td>Unique label for this guard</td></tr><tr><td><code>scope</code></td><td>✓</td><td>Files to check</td></tr><tr><td><code>assert: fn name() exists</code></td><td>✓</td><td>Passes if the named function exists anywhere in scope</td></tr><tr><td><code>assert: no file imports from</code></td><td>✓</td><td>Passes if no file imports from the given path</td></tr><tr><td><code>assert: all files contain</code></td><td>✓</td><td>Passes if every file in scope contains the pattern</td></tr><tr><td><code>on_fail</code></td><td>✓</td><td>block_apply, warn, show_diff — can combine with comma</td></tr></tbody>
+    </table>
+    <h2>Tips</h2>
+    <ul><li>Guards run before patches, fixes, and migrations — always</li><li>Combine multiple asserts in one guard block</li><li>on_fail: block_apply is the safest default for production codebases</li><li>Use guard + trace together for security auditing workflows</li></ul>
+  </main>
+</div>
+</body></html>
