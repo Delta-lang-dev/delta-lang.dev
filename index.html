@@ -1,106 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Delta (Δ) — Universal Code Transformation Language</title>
-  <meta name="description" content="Delta is a language-agnostic code transformation language. Patch, fix, migrate, and guard your codebase with readable, composable transforms." />
-  <meta property="og:title" content="Delta — Universal Code Transformation Language" />
-  <meta property="og:description" content="Patch, fix, migrate, and guard your codebase with readable, composable transforms." />
-  <meta property="og:url" content="https://delta-lang.dev" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/main.css" />
+  <meta name="description" content="Delta is a language-agnostic code transformation language. Patch, fix, migrate, and guard your codebase with readable, composable transforms."/>
+  <meta property="og:title" content="Delta (Δ) — Universal Code Transformation Language"/>
+  <meta property="og:description" content="Six constructs. Any language. Surgical code transformation at scale."/>
+  <meta property="og:url" content="https://delta-lang.dev"/>
+  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
 
-<!-- ── Navigation ─────────────────────────────────────────────────────── -->
-<nav class="nav">
+<!-- ── Nav ──────────────────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">Δ <span>Delta</span></a>
+    <a href="/" class="nav-logo">
+      <span class="logo-delta">Δ</span>
+      <span class="logo-word">Delta</span>
+    </a>
     <div class="nav-links">
-      <a href="/docs">Docs</a>
-      <a href="/playground">Playground</a>
-      <a href="https://github.com/Delta-Lang-Dev/fix-library">Fix Library</a>
-      <a href="https://github.com/Delta-Lang-Dev/Delta" class="nav-cta">GitHub</a>
+      <a href="docs/getting-started.html">Docs</a>
+      <a href="playground/index.html">Playground</a>
+      <a href="https://github.com/Delta-Lang-Dev/fix-library" target="_blank">Fix Library</a>
+      <a href="https://github.com/Delta-Lang-Dev/Delta" target="_blank" class="nav-gh">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
     </div>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<!-- ── Hero ───────────────────────────────────────────────────────────── -->
+<!-- ── Hero ─────────────────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">Open Source · Language Agnostic · TypeScript</div>
-    <h1 class="hero-title">Transform code.<br />Any language.</h1>
+  <div class="hero-bg-delta">Δ</div>
+  <div class="hero-grid-overlay"></div>
+  <div class="container hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Open Source &middot; Language Agnostic &middot; TypeScript
+    </div>
+    <h1 class="hero-title">
+      Transform code.<br/>
+      <span class="hero-title-accent">Any language.</span>
+    </h1>
     <p class="hero-subtitle">
-      Delta is a universal code transformation language. Write readable, composable transforms
-      that work across TypeScript, Python, Go, Rust, Java, and more — powered by real AST parsers.
+      Delta is a universal code transformation language.<br class="br-desktop"/>
+      Write readable, composable transforms that work across<br class="br-desktop"/>
+      TypeScript, Python, Go, Rust, Java, and more.
     </p>
     <div class="hero-actions">
-      <a href="/docs/getting-started" class="btn btn-primary">Get Started →</a>
-      <a href="/playground" class="btn btn-secondary">Try in Playground</a>
+      <a href="docs/getting-started.html" class="btn btn-primary">Get started →</a>
+      <a href="playground/index.html" class="btn btn-ghost">Try in Playground</a>
     </div>
     <div class="hero-install">
-      <code>npm install -g @delta-lang/cli</code>
-      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install -g @delta-lang/cli')">Copy</button>
+      <span class="install-prompt">$</span>
+      <code id="installCmd">npm install -g @delta-lang/cli</code>
+      <button class="copy-btn" id="copyInstall" title="Copy to clipboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
     </div>
   </div>
 </section>
 
-<!-- ── Live Example ────────────────────────────────────────────────────── -->
-<section class="example">
+<!-- ── Live Transform Demo ───────────────────────────────────────────────── -->
+<section class="demo-section">
   <div class="container">
-    <div class="example-header">
-      <h2>See it in action</h2>
-      <p>A single <code>.delta</code> file modernises your entire codebase.</p>
+    <div class="section-label">See it in action</div>
+    <h2 class="section-title">One file. Your whole codebase, transformed.</h2>
+    <p class="section-sub">Write the transform once. Delta handles the rest — finding, validating, and applying changes across every matching file.</p>
+
+    <div class="demo-tabs">
+      <button class="demo-tab active" data-tab="fix">fix</button>
+      <button class="demo-tab" data-tab="patch">patch</button>
+      <button class="demo-tab" data-tab="migrate">migrate</button>
+      <button class="demo-tab" data-tab="guard">guard</button>
+      <button class="demo-tab" data-tab="trace">trace</button>
     </div>
-    <div class="example-grid">
-      <div class="code-panel">
-        <div class="code-panel-header">
-          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-          <span class="code-panel-title">transform.delta</span>
-        </div>
-        <pre class="code"><code><span class="kw">guard</span> <span class="str">"no raw SQL"</span> {
-  scope:   <span class="str">"src/**"</span>
-  <span class="kw">assert</span>:  <span class="kw">no</span> raw f-string SQL queries exist
-  on_fail: block_apply, show_diff
-}
 
+    <div class="demo-panels">
+      <!-- fix -->
+      <div class="demo-panel active" data-panel="fix">
+        <div class="demo-split">
+          <div class="demo-code-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">transform.delta</span>
+            </div>
+            <pre class="demo-code"><code><span class="c">// Upgrade null checks across all TypeScript files</span>
 <span class="kw">fix</span> strictNull {
-  pattern: { == null }
-  replace: { === null }
-  scope:   <span class="str">"**/*.ts"</span>
+  pattern:  { <span class="bad">$X == null</span> }
+  replace:  { <span class="good">$X === null</span> }
+  scope:    <span class="str">"**/*.ts"</span>
   severity: bug
-}
-
-<span class="kw">migrate</span> <span class="str">"lodash → native"</span> <span class="kw">in</span> TypeScript {
-  <span class="kw">rename</span>: _.map    -> Array.prototype.map
-  <span class="kw">rename</span>: _.filter -> Array.prototype.filter
-  scope:  <span class="str">"src/**/*.ts"</span>
+  note:     <span class="str">"Use strict equality"</span>
 }
 
 <span class="kw">apply</span> fix strictNull <span class="kw">to</span> project preview</code></pre>
+          </div>
+          <div class="demo-output-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">delta run output</span>
+            </div>
+            <div class="demo-output">
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">Guard passed — no raw SQL in 47 files</span></div>
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">23 files scanned</span></div>
+              <div class="output-line diff-line"><span class="diff-minus">- if (user == null) return;</span></div>
+              <div class="output-line diff-line"><span class="diff-plus">+ if (user === null) return;</span></div>
+              <div class="output-line diff-line"><span class="diff-minus">- if (data.token == null) throw;</span></div>
+              <div class="output-line diff-line"><span class="diff-plus">+ if (data.token === null) throw;</span></div>
+              <div class="output-line"><span class="out-icon ok">⚡</span> <span class="out-text"><strong>61 changes</strong> across 23 files</span></div>
+              <div class="output-line"><span class="out-icon info">ℹ</span> <span class="out-text">Preview mode — no files written</span></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="example-output">
-        <div class="output-step">
-          <div class="step-icon">✓</div>
-          <div>
-            <strong>Guard passes</strong>
-            <p>No raw SQL found in 47 files</p>
+
+      <!-- patch -->
+      <div class="demo-panel" data-panel="patch">
+        <div class="demo-split">
+          <div class="demo-code-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">transform.delta</span>
+            </div>
+            <pre class="demo-code"><code><span class="c">// Surgically replace one function in one file</span>
+<span class="kw">patch</span> <span class="str">"src/auth/hash.ts"</span> <span class="kw">in</span> TypeScript {
+  <span class="kw">find</span> <span class="kw">fn</span> hashPassword() {}
+  replace <span class="kw">with</span> {
+    <span class="good">return await bcrypt.hash(password, 12);</span>
+  }
+  why: <span class="str">"upgrade to async bcrypt"</span>
+}</code></pre>
+          </div>
+          <div class="demo-output-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">delta run output</span>
+            </div>
+            <div class="demo-output">
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">Located <code>hashPassword</code> in src/auth/hash.ts:14</span></div>
+              <div class="output-line diff-line"><span class="diff-minus">- return md5(password);</span></div>
+              <div class="output-line diff-line"><span class="diff-plus">+ return await bcrypt.hash(password, 12);</span></div>
+              <div class="output-line"><span class="out-icon ok">⚡</span> <span class="out-text"><strong>1 file</strong> patched</span></div>
+              <div class="output-line"><span class="out-icon info">📝</span> <span class="out-text">Reason: upgrade to async bcrypt</span></div>
+            </div>
           </div>
         </div>
-        <div class="output-step">
-          <div class="step-icon">⚡</div>
-          <div>
-            <strong>Fix applied</strong>
-            <p>23 files · 61 occurrences updated</p>
+      </div>
+
+      <!-- migrate -->
+      <div class="demo-panel" data-panel="migrate">
+        <div class="demo-split">
+          <div class="demo-code-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">transform.delta</span>
+            </div>
+            <pre class="demo-code"><code><span class="c">// Migrate lodash to native array methods</span>
+<span class="kw">migrate</span> <span class="str">"lodash to native"</span> <span class="kw">in</span> TypeScript {
+  <span class="kw">rename</span>: <span class="bad">_.map</span>    -> <span class="good">Array.prototype.map</span>
+  <span class="kw">rename</span>: <span class="bad">_.filter</span> -> <span class="good">Array.prototype.filter</span>
+  <span class="kw">rename</span>: <span class="bad">_.find</span>   -> <span class="good">Array.prototype.find</span>
+  <span class="kw">remove</span>: deprecated <span class="bad">_.each</span>
+  scope:  <span class="str">"src/**/*.ts"</span>
+}
+<span class="kw">apply</span> migrate <span class="str">"lodash to native"</span> <span class="kw">to</span> project</code></pre>
+          </div>
+          <div class="demo-output-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">delta run output</span>
+            </div>
+            <div class="demo-output">
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">Scanning 34 TypeScript files</span></div>
+              <div class="output-line diff-line"><span class="diff-minus">- const names = _.map(users, u => u.name);</span></div>
+              <div class="output-line diff-line"><span class="diff-plus">+ const names = users.map(u => u.name);</span></div>
+              <div class="output-line diff-line"><span class="diff-minus">- const active = _.filter(users, u => u.active);</span></div>
+              <div class="output-line diff-line"><span class="diff-plus">+ const active = users.filter(u => u.active);</span></div>
+              <div class="output-line"><span class="out-icon ok">⚡</span> <span class="out-text"><strong>47 renames</strong> across 34 files</span></div>
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">12 deprecated calls removed</span></div>
+            </div>
           </div>
         </div>
-        <div class="output-step">
-          <div class="step-icon">→</div>
-          <div>
-            <strong>Migration previewed</strong>
-            <p>12 lodash calls ready to replace</p>
+      </div>
+
+      <!-- guard -->
+      <div class="demo-panel" data-panel="guard">
+        <div class="demo-split">
+          <div class="demo-code-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">transform.delta</span>
+            </div>
+            <pre class="demo-code"><code><span class="c">// Assert invariants before transforms run</span>
+<span class="kw">guard</span> <span class="str">"no raw SQL"</span> {
+  scope:   <span class="str">"src/**"</span>
+  assert:  <span class="kw">no</span> file contains raw SQL interpolation
+  on_fail: block_apply, show_diff
+}
+
+<span class="kw">guard</span> <span class="str">"api contract"</span> {
+  scope:   <span class="str">"src/**"</span>
+  assert:  <span class="kw">fn</span> verifyToken() exists
+  assert:  <span class="kw">fn</span> hashPassword() exists
+  on_fail: block_apply
+}</code></pre>
+          </div>
+          <div class="demo-output-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">delta run output</span>
+            </div>
+            <div class="demo-output">
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">Guard "no raw SQL" — passed (47 files)</span></div>
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">Guard "api contract" — passed</span></div>
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text"><code>verifyToken</code> found at src/auth/jwt.ts:8</span></div>
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text"><code>hashPassword</code> found at src/auth/hash.ts:14</span></div>
+              <div class="output-line"><span class="out-icon ok">⚡</span> <span class="out-text">All guards passed — proceeding with transforms</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- trace -->
+      <div class="demo-panel" data-panel="trace">
+        <div class="demo-split">
+          <div class="demo-code-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">transform.delta</span>
+            </div>
+            <pre class="demo-code"><code><span class="c">// Track where user input flows through the codebase</span>
+<span class="kw">trace</span> userInput <span class="kw">in</span> <span class="str">"src/"</span> {
+  language: TypeScript
+  origin:   <span class="bad">req.body.email</span>
+  follow:   assignments, function_calls, returns
+  report:   full_chain
+  flag:     <span class="str">"any path reaching db.query without sanitize"</span>
+  flag:     <span class="str">"any path reaching console.log"</span>
+}</code></pre>
+          </div>
+          <div class="demo-output-wrap">
+            <div class="demo-file-header">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <span class="demo-filename">delta run output</span>
+            </div>
+            <div class="demo-output">
+              <div class="output-line"><span class="out-icon ok">✓</span> <span class="out-text">Tracing <code>req.body.email</code> through 23 files</span></div>
+              <div class="output-line"><span class="out-icon warn">⚠</span> <span class="out-text"><strong>FLAG:</strong> email → validateUser → db.query (no sanitize)</span></div>
+              <div class="output-line trace-path">  <span class="trace-arrow">→</span> routes/auth.ts:12 <span class="trace-arrow">→</span> services/user.ts:34 <span class="trace-arrow">→</span> db/query.ts:8</div>
+              <div class="output-line"><span class="out-icon warn">⚠</span> <span class="out-text"><strong>FLAG:</strong> email → logger.debug (exposed in log)</span></div>
+              <div class="output-line trace-path">  <span class="trace-arrow">→</span> middleware/log.ts:22</div>
+              <div class="output-line"><span class="out-icon ok">⚡</span> <span class="out-text">2 paths flagged — full chain report saved</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -108,92 +269,196 @@
   </div>
 </section>
 
-<!-- ── Six Constructs ──────────────────────────────────────────────────── -->
-<section class="constructs">
+<!-- ── Six Constructs ────────────────────────────────────────────────────── -->
+<section class="constructs-section">
   <div class="container">
-    <h2>Six constructs. Infinite transforms.</h2>
-    <p class="section-subtitle">Every transformation maps to one of six composable keywords.</p>
+    <div class="section-label">The language</div>
+    <h2 class="section-title">Six constructs. Infinite transforms.</h2>
+    <p class="section-sub">Every transformation maps to one of six composable keywords. Learn them once, use them everywhere.</p>
     <div class="constructs-grid">
-      <div class="construct-card">
-        <div class="construct-kw">patch</div>
-        <h3>Patch</h3>
-        <p>Surgically replace a specific function or block in a specific file. Uses the TypeScript Compiler API or tree-sitter for AST-accurate targeting.</p>
-      </div>
-      <div class="construct-card">
-        <div class="construct-kw">fix</div>
-        <h3>Fix</h3>
-        <p>Define a reusable pattern → replacement rule and apply it across your entire codebase with glob scoping and $VAR capture groups.</p>
-      </div>
-      <div class="construct-card">
-        <div class="construct-kw">intent</div>
-        <h3>Intent</h3>
-        <p>Inject code at every function entry or exit point without manually touching each file. Add logging, tracing, or guards everywhere at once.</p>
-      </div>
-      <div class="construct-card">
-        <div class="construct-kw">migrate</div>
-        <h3>Migrate</h3>
-        <p>Upgrade from one API to another. Rename symbols, move files, replace patterns — all in one declarative migration block.</p>
-      </div>
-      <div class="construct-card">
-        <div class="construct-kw">guard</div>
-        <h3>Guard</h3>
-        <p>Assert invariants before applying any transform. Block apply if a function is missing, a forbidden import exists, or raw SQL is detected.</p>
-      </div>
-      <div class="construct-card">
-        <div class="construct-kw">trace</div>
-        <h3>Trace</h3>
-        <p>Follow data through your codebase. Track where <code>req.body.password</code> flows, flag paths that reach <code>console.log</code> or unparameterised queries.</p>
-      </div>
+      <a href="docs/patch.html" class="construct-card">
+        <div class="construct-header">
+          <code class="construct-kw">patch</code>
+          <span class="construct-arrow">→</span>
+        </div>
+        <h3>Surgical replacement</h3>
+        <p>Replace a specific function or block in a specific file. AST-accurate — never matches the wrong thing.</p>
+      </a>
+      <a href="docs/fix.html" class="construct-card">
+        <div class="construct-header">
+          <code class="construct-kw">fix</code>
+          <span class="construct-arrow">→</span>
+        </div>
+        <h3>Reusable patterns</h3>
+        <p>Define a pattern → replacement rule with <code>$VAR</code> captures. Apply it across your entire codebase in one line.</p>
+      </a>
+      <a href="docs/intent.html" class="construct-card">
+        <div class="construct-header">
+          <code class="construct-kw">intent</code>
+          <span class="construct-arrow">→</span>
+        </div>
+        <h3>Cross-cutting injection</h3>
+        <p>Add logging, tracing, or metrics to every function entry or exit — without touching each file manually.</p>
+      </a>
+      <a href="docs/migrate.html" class="construct-card">
+        <div class="construct-header">
+          <code class="construct-kw">migrate</code>
+          <span class="construct-arrow">→</span>
+        </div>
+        <h3>API migrations</h3>
+        <p>Rename symbols, move files, remove deprecated calls. Write the migration once, apply it project-wide.</p>
+      </a>
+      <a href="docs/guard.html" class="construct-card">
+        <div class="construct-header">
+          <code class="construct-kw">guard</code>
+          <span class="construct-arrow">→</span>
+        </div>
+        <h3>Safety invariants</h3>
+        <p>Assert that functions exist, imports are clean, and code is safe before any transform runs. Block on failure.</p>
+      </a>
+      <a href="docs/trace.html" class="construct-card">
+        <div class="construct-header">
+          <code class="construct-kw">trace</code>
+          <span class="construct-arrow">→</span>
+        </div>
+        <h3>Data-flow analysis</h3>
+        <p>Follow user input through your codebase. Flag any path that reaches an unparameterised query or unsanitised output.</p>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ── Language Support ────────────────────────────────────────────────── -->
-<section class="languages">
+<!-- ── Language Support ──────────────────────────────────────────────────── -->
+<section class="langs-section">
   <div class="container">
-    <h2>Works across every major language</h2>
-    <div class="lang-grid">
-      <div class="lang-chip lang-stable">TypeScript <span>stable</span></div>
-      <div class="lang-chip lang-stable">JavaScript <span>stable</span></div>
-      <div class="lang-chip lang-stable">Python <span>stable</span></div>
-      <div class="lang-chip lang-stable">Go <span>stable</span></div>
-      <div class="lang-chip lang-stable">Rust <span>stable</span></div>
-      <div class="lang-chip lang-beta">Java <span>beta</span></div>
-      <div class="lang-chip lang-beta">Kotlin <span>beta</span></div>
-      <div class="lang-chip lang-beta">Swift <span>beta</span></div>
-      <div class="lang-chip lang-beta">Ruby <span>beta</span></div>
-      <div class="lang-chip lang-beta">C++ <span>beta</span></div>
-      <div class="lang-chip lang-beta">C# <span>beta</span></div>
-      <div class="lang-chip lang-beta">PHP <span>beta</span></div>
+    <div class="section-label">Language support</div>
+    <h2 class="section-title">Works where your code lives.</h2>
+    <div class="langs-grid">
+      <div class="lang-row">
+        <span class="lang-status stable">Stable</span>
+        <div class="lang-chips">
+          <span class="lang-chip">TypeScript</span>
+          <span class="lang-chip">JavaScript</span>
+          <span class="lang-chip">Python</span>
+          <span class="lang-chip">Go</span>
+          <span class="lang-chip">Rust</span>
+        </div>
+      </div>
+      <div class="lang-row">
+        <span class="lang-status beta">Beta</span>
+        <div class="lang-chips">
+          <span class="lang-chip dim">Java</span>
+          <span class="lang-chip dim">Kotlin</span>
+          <span class="lang-chip dim">Swift</span>
+          <span class="lang-chip dim">Ruby</span>
+          <span class="lang-chip dim">C++</span>
+          <span class="lang-chip dim">C#</span>
+          <span class="lang-chip dim">PHP</span>
+        </div>
+      </div>
+    </div>
+    <p class="langs-note">Stable languages use the TypeScript Compiler API or tree-sitter for AST-accurate transforms. Beta languages use the generic tree-sitter adapter.</p>
+  </div>
+</section>
+
+<!-- ── Fix Library CTA ───────────────────────────────────────────────────── -->
+<section class="fixlib-section">
+  <div class="container fixlib-inner">
+    <div class="fixlib-text">
+      <div class="section-label">Fix Library</div>
+      <h2 class="section-title" style="margin-bottom:12px">Don't write transforms from scratch.</h2>
+      <p class="section-sub" style="margin-bottom:28px">The community fix library has ready-to-run transforms for the most common patterns — null checks, async modernisation, security fixes, API migrations, and more.</p>
+      <div class="fixlib-actions">
+        <a href="https://github.com/Delta-Lang-Dev/fix-library" target="_blank" class="btn btn-primary">Browse fixes →</a>
+        <a href="https://github.com/Delta-Lang-Dev/fix-library/blob/main/CONTRIBUTING.md" target="_blank" class="btn btn-ghost">Contribute a fix</a>
+      </div>
+    </div>
+    <div class="fixlib-preview">
+      <div class="fixlib-file-list">
+        <div class="fix-file"><span class="fix-file-icon ts">TS</span> null-checks.delta <span class="fix-file-badge bug">bug</span></div>
+        <div class="fix-file"><span class="fix-file-icon ts">TS</span> async-modernisation.delta <span class="fix-file-badge style">style</span></div>
+        <div class="fix-file"><span class="fix-file-icon sec">🔒</span> sql-injection.delta <span class="fix-file-badge security">security</span></div>
+        <div class="fix-file"><span class="fix-file-icon sec">🔒</span> hardcoded-secrets.delta <span class="fix-file-badge security">security</span></div>
+        <div class="fix-file"><span class="fix-file-icon py">PY</span> f-string-migration.delta <span class="fix-file-badge style">style</span></div>
+        <div class="fix-file"><span class="fix-file-icon go">GO</span> error-handling.delta <span class="fix-file-badge bug">bug</span></div>
+        <div class="fix-file"><span class="fix-file-icon ts">TS</span> performance.delta <span class="fix-file-badge perf">perf</span></div>
+        <div class="fix-file"><span class="fix-file-icon mg">→</span> react-18.delta <span class="fix-file-badge migrate">migrate</span></div>
+        <div class="fix-file"><span class="fix-file-icon mg">→</span> next-14.delta <span class="fix-file-badge migrate">migrate</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── CTA ────────────────────────────────────────────────────────────── -->
-<section class="cta">
+<!-- ── Getting Started ───────────────────────────────────────────────────── -->
+<section class="start-section">
   <div class="container">
-    <h2>Start transforming today</h2>
-    <p>One command. Your entire codebase, modernised.</p>
-    <div class="cta-actions">
-      <a href="/docs/getting-started" class="btn btn-primary btn-lg">Read the docs</a>
-      <a href="https://github.com/Delta-Lang-Dev/Delta" class="btn btn-outline btn-lg">Star on GitHub</a>
+    <div class="section-label">Get started</div>
+    <h2 class="section-title">Up and running in 60 seconds.</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Install</h3>
+        <pre class="step-code"><code>npm install -g @delta-lang/cli</code></pre>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Create a transform</h3>
+        <pre class="step-code"><code>delta init</code></pre>
+        <p class="step-note">Scaffolds a <code>transform.delta</code> in your project root.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Preview &amp; apply</h3>
+        <pre class="step-code"><code>delta run transform.delta --preview
+delta run transform.delta</code></pre>
+      </div>
+    </div>
+    <div class="start-links">
+      <a href="docs/getting-started.html" class="btn btn-primary btn-lg">Read the full docs →</a>
+      <a href="playground/index.html" class="btn btn-ghost btn-lg">Try in Playground</a>
     </div>
   </div>
 </section>
 
-<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<!-- ── Footer ────────────────────────────────────────────────────────────── -->
 <footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <span>Δ Delta — MIT License</span>
-      <div class="footer-links">
-        <a href="/docs">Docs</a>
-        <a href="https://github.com/Delta-Lang-Dev">GitHub</a>
-        <a href="https://github.com/Delta-Lang-Dev/fix-library">Fix Library</a>
+  <div class="container footer-inner">
+    <div class="footer-left">
+      <a href="/" class="nav-logo footer-logo">
+        <span class="logo-delta">Δ</span>
+        <span class="logo-word">Delta</span>
+      </a>
+      <p class="footer-tagline">Universal code transformation language.</p>
+      <p class="footer-license">MIT License &middot; Made for builders</p>
+    </div>
+    <div class="footer-links-grid">
+      <div class="footer-col">
+        <div class="footer-col-title">Language</div>
+        <a href="docs/patch.html">patch</a>
+        <a href="docs/fix.html">fix</a>
+        <a href="docs/intent.html">intent</a>
+        <a href="docs/migrate.html">migrate</a>
+        <a href="docs/guard.html">guard</a>
+        <a href="docs/trace.html">trace</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Resources</div>
+        <a href="docs/getting-started.html">Getting started</a>
+        <a href="playground/index.html">Playground</a>
+        <a href="https://github.com/Delta-Lang-Dev/fix-library" target="_blank">Fix Library</a>
+        <a href="https://github.com/Delta-Lang-Dev/Delta/blob/main/SPEC.md" target="_blank">Language Spec</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">GitHub</div>
+        <a href="https://github.com/Delta-Lang-Dev/Delta" target="_blank">Compiler</a>
+        <a href="https://github.com/Delta-Lang-Dev/vscode-delta" target="_blank">VS Code</a>
+        <a href="https://github.com/Delta-Lang-Dev/fix-library" target="_blank">Fix Library</a>
+        <a href="https://github.com/Delta-Lang-Dev/delta-lang.dev" target="_blank">This site</a>
       </div>
     </div>
   </div>
 </footer>
 
+<script src="js/main.js"></script>
 </body>
 </html>
