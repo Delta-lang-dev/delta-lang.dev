@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Playground — Delta (Δ)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <style>
+    .playground-wrap { max-width: 1140px; margin: 0 auto; padding: 40px 24px; }
+    .playground-header { margin-bottom: 32px; }
+    .playground-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .playground-panel { background: #0a0a16; border: 1px solid var(--border-2); border-radius: var(--radius-lg); overflow: hidden; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+    .panel-title { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-3); }
+    .panel-action { font-size: 0.78rem; color: var(--accent-2); background: none; border: 1px solid rgba(124,58,237,0.3); border-radius: 4px; padding: 4px 10px; cursor: pointer; font-family: var(--font-mono); transition: all 0.15s; }
+    .panel-action:hover { background: rgba(124,58,237,0.1); }
+    #delta-editor { width: 100%; height: 400px; padding: 18px; font-family: var(--font-mono); font-size: 0.83rem; background: transparent; color: var(--text); border: none; outline: none; resize: none; line-height: 1.75; }
+    .output-panel { padding: 18px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-2); min-height: 400px; line-height: 1.7; white-space: pre-wrap; }
+    .output-panel .ok   { color: var(--green); }
+    .output-panel .err  { color: var(--red); }
+    .output-panel .info { color: var(--accent-2); }
+    .output-panel .dim  { color: var(--text-3); }
+    .examples-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .example-chip { background: var(--surface); border: 1px solid var(--border); color: var(--text-2); font-family: var(--font-mono); font-size: 0.78rem; padding: 5px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; }
+    .example-chip:hover { border-color: var(--accent); color: var(--accent-2); }
+    @media (max-width: 700px) { .playground-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav class="nav" id="nav"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo"><span class="logo-delta">Δ</span><span class="logo-word">Delta</span></a>
+  <div class="nav-links">
+    <a href="../docs/getting-started.html">Docs</a>
+    <a href="index.html" style="color:var(--accent-2)">Playground</a>
+    <a href="https://github.com/Delta-Lang-Dev/Delta" target="_blank">GitHub</a>
+  </div>
+</div></nav>
+
+<div class="playground-wrap">
+  <div class="playground-header">
+    <div class="section-label">Playground</div>
+    <h1 class="section-title">Try Delta in your browser</h1>
+    <p style="color:var(--text-2);font-size:0.9rem;margin-top:8px">Write a Delta transform, hit Run, and see the simulated output. Install the CLI to run transforms on your real codebase.</p>
+  </div>
+
+  <div class="examples-bar">
+    <button class="example-chip" data-example="fix">fix — null checks</button>
+    <button class="example-chip" data-example="patch">patch — function</button>
+    <button class="example-chip" data-example="migrate">migrate — lodash</button>
+    <button class="example-chip" data-example="guard">guard — api contract</button>
+    <button class="example-chip" data-example="trace">trace — data flow</button>
+  </div>
+
+  <div class="playground-grid">
+    <div class="playground-panel">
+      <div class="panel-header">
+        <span class="panel-title">transform.delta</span>
+        <button class="panel-action" id="runBtn">▶ Run</button>
+      </div>
+      <textarea id="delta-editor" spellcheck="false">// Upgrade null checks across TypeScript files
+fix strictNull {
+  pattern:  { $X == null }
+  replace:  { $X === null }
+  scope:    "**/*.ts"
+  severity: bug
+  note:     "Use strict equality"
+}
+
+apply fix strictNull to project preview</textarea>
+    </div>
+    <div class="playground-panel">
+      <div class="panel-header">
+        <span class="panel-title">output</span>
+      </div>
+      <div class="output-panel" id="output"><span class="dim">Hit ▶ Run to see output</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+const EXAMPLES = {
+  fix: `// Upgrade null checks across TypeScript files
+fix strictNull {
+  pattern:  { $X == null }
+  replace:  { $X === null }
+  scope:    "**/*.ts"
+  severity: bug
+  note:     "Use strict equality"
+}
+
+apply fix strictNull to project preview`,
+  patch: `// Surgically replace a function in a specific file
+patch "src/auth/hash.ts" in TypeScript {
+  find fn hashPassword() {}
+  replace with {
+    return await bcrypt.hash(password, 12);
+  }
+  why: "upgrade to async bcrypt"
+}`,
+  migrate: `// Migrate lodash to native array methods
+migrate "lodash to native" in TypeScript {
+  rename: _.map    -> [].map
+  rename: _.filter -> [].filter
+  rename: _.find   -> [].find
+  remove: deprecated _.each
+  scope:  "src/**/*.ts"
+}
+
+apply migrate "lodash to native" to project`,
+  guard: `// Assert invariants before transforms run
+guard "api-contract" {
+  scope:   "src/**"
+  assert:  fn verifyToken() exists
+  assert:  fn hashPassword() exists
+  assert:  no file imports from "../admin"
+  on_fail: block_apply, show_diff
+}
+
+guard "no-raw-sql" {
+  scope:   "src/**"
+  assert:  no file contains raw SQL interpolation
+  on_fail: block_apply
+}`,
+  trace: `// Track where user input flows through the codebase
+trace userInput in "src/" {
+  language: TypeScript
+  origin:   req.body.email
+  follow:   assignments, function_calls, returns
+  report:   full_chain
+  flag:     "any path reaching db.query without sanitize"
+  flag:     "any path reaching console.log"
+}`
+};
+
+const OUTPUTS = {
+  fix: `<span class="ok">✓</span> Parsing transform.delta
+<span class="ok">✓</span> Validation passed — 0 errors, 0 warnings
+<span class="info">→</span> Scanning **/*.ts (preview mode)
+<span class="ok">✓</span> 23 files matched
+
+<span class="dim">--- src/api/user.ts ---</span>
+<span style="color:#fca5a5">- if (user == null) return null;</span>
+<span style="color:#6ee7b7">+ if (user === null) return null;</span>
+
+<span class="dim">--- src/services/auth.ts ---</span>
+<span style="color:#fca5a5">- if (token == null) throw new Error("No token");</span>
+<span style="color:#6ee7b7">+ if (token === null) throw new Error("No token");</span>
+
+<span class="dim">--- src/db/query.ts ---</span>
+<span style="color:#fca5a5">- if (result == null) return [];</span>
+<span style="color:#6ee7b7">+ if (result === null) return [];</span>
+
+<span class="dim">... 58 more changes across 20 files</span>
+
+<span class="ok">⚡</span> <strong>61 changes</strong> across 23 files
+<span class="info">ℹ</span>  Preview mode — no files written
+<span class="info">ℹ</span>  Run without --preview to apply`,
+  patch: `<span class="ok">✓</span> Parsing transform.delta
+<span class="ok">✓</span> Validation passed
+<span class="info">→</span> Locating fn hashPassword() in src/auth/hash.ts
+<span class="ok">✓</span> Found at line 14
+
+<span class="dim">--- src/auth/hash.ts ---</span>
+<span style="color:#fca5a5">- function hashPassword(password: string) {</span>
+<span style="color:#fca5a5">-   return md5(password);</span>
+<span style="color:#fca5a5">- }</span>
+<span style="color:#6ee7b7">+ async function hashPassword(password: string) {</span>
+<span style="color:#6ee7b7">+   return await bcrypt.hash(password, 12);</span>
+<span style="color:#6ee7b7">+ }</span>
+
+<span class="ok">⚡</span> <strong>1 file</strong> patched
+<span class="info">📝</span> Reason: upgrade to async bcrypt`,
+  migrate: `<span class="ok">✓</span> Parsing transform.delta
+<span class="ok">✓</span> Validation passed
+<span class="info">→</span> Scanning src/**/*.ts — 34 files matched
+
+<span class="dim">--- src/utils/data.ts ---</span>
+<span style="color:#fca5a5">- const names = _.map(users, u => u.name);</span>
+<span style="color:#6ee7b7">+ const names = users.map(u => u.name);</span>
+<span style="color:#fca5a5">- const active = _.filter(users, u => u.active);</span>
+<span style="color:#6ee7b7">+ const active = users.filter(u => u.active);</span>
+
+<span class="dim">--- src/api/search.ts ---</span>
+<span style="color:#fca5a5">- return _.find(results, r => r.id === id);</span>
+<span style="color:#6ee7b7">+ return results.find(r => r.id === id);</span>
+
+<span class="dim">... 44 more renames across 32 files</span>
+
+<span class="ok">⚡</span> <strong>47 renames</strong> across 34 files
+<span class="ok">✓</span> 12 deprecated _.each calls removed`,
+  guard: `<span class="ok">✓</span> Parsing transform.delta
+<span class="ok">✓</span> Validation passed
+<span class="info">→</span> Running guards before transforms...
+
+<span class="info">Guard: "api-contract"</span>
+<span class="ok">  ✓</span> fn verifyToken() found — src/auth/jwt.ts:8
+<span class="ok">  ✓</span> fn hashPassword() found — src/auth/hash.ts:14
+<span class="ok">  ✓</span> No imports from "../admin" detected
+<span class="ok">  ✓</span> Guard passed
+
+<span class="info">Guard: "no-raw-sql"</span>
+<span class="ok">  ✓</span> No raw SQL interpolation detected in 47 files
+<span class="ok">  ✓</span> Guard passed
+
+<span class="ok">⚡</span> All guards passed — safe to apply transforms`,
+  trace: `<span class="ok">✓</span> Parsing transform.delta
+<span class="ok">✓</span> Validation passed
+<span class="info">→</span> Tracing req.body.email through src/ (23 files)
+
+<span class="info">Building data-flow graph...</span>
+<span class="ok">✓</span> 847 nodes · 1,203 edges
+
+<span style="color:#f59e0b">⚠ FLAG: path reaches db.query without sanitize</span>
+  routes/auth.ts:12 → req.body.email
+  → services/user.ts:34 → validateUser(email)
+  → db/query.ts:8 → db.query("SELECT * WHERE email=" + email)
+
+<span style="color:#f59e0b">⚠ FLAG: path reaches console.log</span>
+  middleware/log.ts:22 → logger.debug({ email })
+
+<span class="ok">✓</span> 2 paths flagged
+<span class="ok">✓</span> 6 safe paths found (reach sanitize before db)
+<span class="info">📄</span> Full chain report: ./delta-trace-report.json`
+};
+
+document.querySelectorAll('.example-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const key = chip.dataset.example;
+    document.getElementById('delta-editor').value = EXAMPLES[key];
+    document.getElementById('output').innerHTML = '<span class="dim">Hit ▶ Run to see output</span>';
+  });
+});
+
+document.getElementById('runBtn').addEventListener('click', () => {
+  const editor = document.getElementById('delta-editor');
+  const output = document.getElementById('output');
+  const src = editor.value.trim();
+  if (!src) return;
+
+  output.innerHTML = '<span class="dim">Running...</span>';
+
+  setTimeout(() => {
+    // Match to example outputs
+    let result = null;
+    if (src.includes('fix strictNull') || src.includes('fix ')) result = OUTPUTS.fix;
+    if (src.includes('patch ')) result = OUTPUTS.patch;
+    if (src.includes('migrate ')) result = OUTPUTS.migrate;
+    if (src.includes('guard ')) result = OUTPUTS.guard;
+    if (src.includes('trace ')) result = OUTPUTS.trace;
+    if (!result) result = `<span class="ok">✓</span> Parsing transform.delta
+<span class="ok">✓</span> Validation passed
+<span class="info">→</span> Running transforms...
+<span class="ok">⚡</span> Done`;
+    output.innerHTML = result;
+  }, 600);
+});
+</script>
+</body></html>
